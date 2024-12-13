@@ -18,10 +18,13 @@ I initially wanted a system with Intel N100 processor, but couldn't really find 
 In the end I was able to snatch an Intel i5-14500 processor for half the price (at the time) and decided to get an [ASUS PRIME H610I-PLUS D4-CSM](https://www.asus.com/us/motherboards-components/motherboards/prime/prime-h610i-plus-d4-csm/) to go along with it.
 
 ### Memory
+TODO
 
 ### OS drive
+TODO
 
 ### Power supply
+TODO
 
 ### Case
 I chose the Jonsbo N3 for its compactness.
@@ -30,3 +33,6 @@ I chose the Jonsbo N3 for its compactness.
 This was a bit of an overkill. I probably should have gotten something smaller. I got 4 x Seagate EXOS 14Tb HDD.
 
 ## Power management
+I have been unable to get the CPU to get past C3 states.
+I have not dug deeper into forcing better power management by the OS and I have been relying on the BIOS settings (this might be the problem).
+All the powertop tunings are in place using TLP.
