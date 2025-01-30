@@ -77,10 +77,12 @@ For my use cases I decided to break down the ZFS pool into the following dataset
 Create general `userdata` dataset and individual user-level sub-datasets.
 ```bash
 sudo zfs create pool/userdata
+sudo zfs set recordsize=128K pool/userdata
 sudo zfs create pool/userdata/user1
 sudo zfs create -o normalization=formD pool/userdata/user2
 ```
 The `normalization=formD` is meant to help with the Mac User 2.
+The `recordsize=128K` can hopefully help with performance for small and medium large files.
 
 #### Shared Media
 Create general `media` dataset.
