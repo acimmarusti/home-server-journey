@@ -98,7 +98,7 @@ Media dataset hierarchy:
 2. Videos (optimizing for larger files):
    ```bash
    sudo zfs create pool/media/videos
-   sudo zfs set recordsize=1M pool/media/photos
+   sudo zfs set recordsize=1M pool/media/videos
    ```
 2. Camera (optimizing for larger files and live recording):
    ```bash
@@ -154,19 +154,19 @@ sudo useradd -m user2
 ```
 Now, for ownership, I have following scheme:
 ```bash
-chown -R user1:user1 /mnt/pool/userdata/user1
-chown -R user2:user2 /mnt/pool/userdata/user2
-chown -R :nasusers /mnt/pool/media
-chmod -R 770 /mnt/pool/media
-chown -R :nasusers /mnt/pool/backups
-chmod -R 770 /mnt/pool/backups
+sudo chown -R user1:user1 /mnt/pool/userdata/user1
+sudo chown -R user2:user2 /mnt/pool/userdata/user2
+sudo chown -R :nasusers /mnt/pool/media
+sudo chmod -R 770 /mnt/pool/media
+sudo chown -R :nasusers /mnt/pool/backups
+sudo chmod -R 770 /mnt/pool/backups
 ```
 
 ## Samba configuration
 It is important to add the unix user as a Samba users, like so:
 ```bash
-smbpasswd -a user1
-smbpasswd -a user2
+sudo smbpasswd -a user1
+sudo smbpasswd -a user2
 ```
 In general I will try to keep the same password
 
