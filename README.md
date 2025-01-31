@@ -174,6 +174,15 @@ In general I will try to keep the same password
 
 Here's a few snippet configurations for the various datasets:
 
+### Globals
+Samba global settings for taking advantage of ZFS options: `xattr=sa` and `acltype=posixacl`
+```
+[globals]
+vfs objects = acl_xattr
+map acl inherit = yes
+store dos attributes = yes
+```
+
 ### User Data
 For each user like so:
 ```
