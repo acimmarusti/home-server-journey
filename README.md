@@ -213,7 +213,7 @@ directory mask = 0700
 
 ### Backups (others)
 ```
-[TimeMachine]
+[Others]
 path = /mnt/pool/backups/others
 valid users = @nasusers
 browseable = no
