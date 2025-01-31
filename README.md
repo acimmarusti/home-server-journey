@@ -154,8 +154,10 @@ sudo useradd -m user2
 ```
 Now, for ownership, I have following scheme:
 ```bash
-sudo chown -R user1:user1 /mnt/pool/userdata/user1
-sudo chown -R user2:user2 /mnt/pool/userdata/user2
+sudo chown -R :nasusers /mnt/pool/userdata
+sudo chown -R user1:nasusers /mnt/pool/userdata/user1
+sudo chown -R user2:nasusers /mnt/pool/userdata/user2
+sudo chmod -R 770 /mnt/pool/userdata
 sudo chown -R :nasusers /mnt/pool/media
 sudo chmod -R 770 /mnt/pool/media
 sudo chown -R :nasusers /mnt/pool/backups
