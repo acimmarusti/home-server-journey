@@ -177,7 +177,7 @@ Here's a few snippet configurations for the various datasets:
 ### Globals
 Samba global settings for taking advantage of ZFS options: `xattr=sa` and `acltype=posixacl`
 ```
-[globals]
+[global]
 vfs objects = acl_xattr
 map acl inherit = yes
 store dos attributes = yes
@@ -186,7 +186,7 @@ store dos attributes = yes
 ### User Data
 For each user like so:
 ```
-[User1]
+[user1]
 path = /mnt/pool/userdata/user1
 valid users = user1
 browseable = no
@@ -197,7 +197,7 @@ directory mask = 0770
 
 ### Media
 ```
-[Media]
+[media]
 path = /mnt/pool/media
 valid users = @nasusers
 browseable = yes
@@ -210,7 +210,7 @@ vfs objects = catia fruit streams_xattr
 
 ### Backups (time machine)
 ```
-[TimeMachine]
+[timemachine]
 path = /mnt/pool/backups/timemachine
 valid users = @nasusers
 browseable = no
@@ -224,7 +224,7 @@ directory mask = 0700
 
 ### Backups (others)
 ```
-[Others]
+[others]
 path = /mnt/pool/backups/others
 valid users = @nasusers
 browseable = no
