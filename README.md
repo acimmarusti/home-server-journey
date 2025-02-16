@@ -100,7 +100,12 @@ Media dataset hierarchy:
    sudo zfs create pool/media/videos
    sudo zfs set recordsize=1M pool/media/videos
    ```
-2. Camera (optimizing for larger files and live recording):
+3. Music (optimizing for smaller files):
+   ```bash
+   sudo zfs create pool/media/music
+   sudo zfs set recordsize=128K pool/media/music
+   ```
+4. Camera (optimizing for larger files and live recording):
    ```bash
    sudo zfs create pool/media/camera
    sudo zfs set compression=off recordsize=1M logbias=throughput sync=always pool/media/camera
@@ -133,11 +138,36 @@ Disable ZFS trimming in cron.d (since using HDD only pool)
 Monthly (TODO)
 
 ### ZFS Snapshots
-Frequency:
-User Data: Daily, keep for 1 month.
-Media: Weekly, keep for 6 months.
-Backups: Daily, keep for 2 weeks.
-Time Machine: Weekly, keep for 3 months.
+Frequency policy managed by `zfs-auto-snapshot`
+
+#### User Data
+Daily, keep for 1 month.
+
+```
+sudo zfs set com.sun:auto-snapshot:daily=30 pool/userdata
+```
+
+#### Media
+Weekly, keep for 6 months.
+
+```
+sudo zfs set com.sun:auto-snapshot:weekly=26 pool/media
+```
+
+Disable snapshoting of `camera` sub-dataset (live camera recordings snapshots are not recommended due to rapid write churn)
+
+```
+sudo zfs set com.sun:auto-snapshot=false pool/media/camera
+```
+
+#### Backups
+Weekly, keep for 3 months (including `timemachine`)
+
+```
+sudo zfs set com.sun:auto-snapshot:weekly=13 pool/backups
+```
+
+
 
 ## Permissions and ownership
 I decided to create a `nasusers` group:
