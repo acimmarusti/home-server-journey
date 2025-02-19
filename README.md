@@ -178,9 +178,10 @@ Then add existing allowed users to this group:
 ```bash
 sudo usermod -aG nasusers user1
 ```
-For new users, then create the account first:
+For new users, then create the account (and password) first:
 ```bash
 sudo useradd -m user2
+sudo passwd user2
 ```
 Now, for ownership, I have following scheme:
 ```bash
