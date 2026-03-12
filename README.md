@@ -254,6 +254,7 @@ path = /mnt/pool/backups/timemachine
 valid users = @nasusers
 browseable = no
 writable = yes
+read only = no
 vfs objects = catia fruit streams_xattr
 fruit:aapl = yes
 fruit:time machine = yes
