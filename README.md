@@ -191,6 +191,8 @@ sudo passwd user2
 ```
 Now, for ownership, I have following scheme:
 ```bash
+sudo chown :nasusers /mnt/pool
+sudo chmod 750
 sudo chown -R :nasusers /mnt/pool/userdata
 sudo chown -R user1:nasusers /mnt/pool/userdata/user1
 sudo chown -R user2:nasusers /mnt/pool/userdata/user2
@@ -265,9 +267,10 @@ directory mask = 0700
 path = /mnt/pool/backups/others
 valid users = @nasusers
 browseable = no
+read only = no
 writable = yes
-create mask = 0600
-directory mask = 0700
+create mask = 0660
+directory mask = 0770
 ```
 
 ## Other debian configurations
