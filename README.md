@@ -70,6 +70,7 @@ For my use cases I decided to break down the ZFS pool into the following dataset
    2. Music
    3. Videos
    4. Camera
+   5. Gallery
 3. backups (shared)
    1. timemachine
 
@@ -109,6 +110,11 @@ Media dataset hierarchy:
    ```bash
    sudo zfs create pool/media/camera
    sudo zfs set compression=off recordsize=1M logbias=throughput sync=always pool/media/camera
+   ```
+5. Gallery (optimizing for smaller files):
+   ```bash
+   sudo zfs create pool/media/gallery
+   sudo zfs set recordsize=128K pool/media/gallery
    ```
 #### Backups
 Create general `backups` dataset.
