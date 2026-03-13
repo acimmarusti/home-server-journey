@@ -70,6 +70,7 @@ For my use cases I decided to break down the ZFS pool into the following dataset
    2. Music
    3. Videos
    4. Camera
+   5. Gallery
 3. backups (shared)
    1. timemachine
 
@@ -109,6 +110,11 @@ Media dataset hierarchy:
    ```bash
    sudo zfs create pool/media/camera
    sudo zfs set compression=off recordsize=1M logbias=throughput sync=always pool/media/camera
+   ```
+5. Gallery (optimizing for smaller files):
+   ```bash
+   sudo zfs create pool/media/gallery
+   sudo zfs set recordsize=128K pool/media/gallery
    ```
 #### Backups
 Create general `backups` dataset.
@@ -185,6 +191,8 @@ sudo passwd user2
 ```
 Now, for ownership, I have following scheme:
 ```bash
+sudo chown :nasusers /mnt/pool
+sudo chmod 750
 sudo chown -R :nasusers /mnt/pool/userdata
 sudo chown -R user1:nasusers /mnt/pool/userdata/user1
 sudo chown -R user2:nasusers /mnt/pool/userdata/user2
@@ -246,6 +254,7 @@ path = /mnt/pool/backups/timemachine
 valid users = @nasusers
 browseable = no
 writable = yes
+read only = no
 vfs objects = catia fruit streams_xattr
 fruit:aapl = yes
 fruit:time machine = yes
@@ -259,9 +268,10 @@ directory mask = 0700
 path = /mnt/pool/backups/others
 valid users = @nasusers
 browseable = no
+read only = no
 writable = yes
-create mask = 0600
-directory mask = 0700
+create mask = 0660
+directory mask = 0770
 ```
 
 ## Other debian configurations
