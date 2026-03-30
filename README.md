@@ -188,7 +188,7 @@ sudo passwd user2
 Now, for ownership, I have following scheme:
 ```bash
 sudo chown :nasusers /mnt/pool
-sudo chmod 750
+sudo chmod 750 /mnt/pool
 sudo chown -R :nasusers /mnt/pool/userdata
 sudo chown -R user1:nasusers /mnt/pool/userdata/user1
 sudo chown -R user2:nasusers /mnt/pool/userdata/user2
