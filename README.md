@@ -85,6 +85,8 @@ The `recordsize=128K` can hopefully help with performance for small and medium l
 Create general `media` dataset.
 ```bash
 sudo zfs create pool/media
+sudo zfs set aclmode=passthrough pool/media
+sudo zfs set aclinherit=passthrough pool/media
 ```
 Media dataset hierarchy:
 1. Photos (optimizing for smaller files):
@@ -116,6 +118,8 @@ Media dataset hierarchy:
 Create general `backups` dataset.
 ```bash
 sudo zfs create pool/backups
+sudo zfs set aclmode=passthrough pool/backups
+sudo zfs set aclinherit=passthrough pool/backups
 ```
 Backups dataset hierarchy:
 1. timemachine (For Apple users):
@@ -210,12 +214,13 @@ In general I will try to keep the same password
 Here's a few snippet configurations for the various datasets:
 
 ### Globals
-Samba global settings for taking advantage of ZFS options: `xattr=sa` and `acltype=posixacl`
+Samba global settings for taking advantage of ZFS options: `xattr=on` and `acltype=posix`
 ```
 [global]
 vfs objects = acl_xattr
 map acl inherit = yes
 store dos attributes = yes
+ea support = yes
 ```
 
 ### User Data
@@ -238,6 +243,7 @@ valid users = @nasusers
 browseable = yes
 writable = yes
 read only = no
+inherit acls = yes
 create mask = 0660
 directory mask = 0770
 vfs objects = catia fruit streams_xattr
@@ -251,6 +257,7 @@ valid users = @nasusers
 browseable = no
 writable = yes
 read only = no
+inherit acls = yes
 vfs objects = catia fruit streams_xattr
 fruit:aapl = yes
 fruit:time machine = yes
@@ -266,6 +273,7 @@ valid users = @nasusers
 browseable = no
 read only = no
 writable = yes
+inherit acls = yes
 create mask = 0660
 directory mask = 0770
 ```
