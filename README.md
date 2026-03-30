@@ -52,8 +52,8 @@ sudo zpool create -o ashift=12 pool raidz2 /dev/disk/by-id/ata-ST14000NM000J-2TX
 Used the following global settings on my ZFS pool for optimizing it to be used as SMB (Samba) shares as well as providing fast compression.
 ```bash
 sudo zfs set compression=lz4 pool
-sudo zfs set xattr=sa pool
-sudo zfs set acltype=posixacl pool
+sudo zfs set xattr=on pool
+sudo zfs set acltype=posix pool
 sudo zfs set atime=off pool
 sudo zfs set mountpoint=/mnt/pool pool
 ```
