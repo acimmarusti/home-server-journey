@@ -40,12 +40,8 @@ All the powertop tunings are in place using TLP.
 
 ## Updating home assistant container
 ```bash
-sudo docker ps
-sudo docker stop homeassistant
-sudo docker rm homeassistant
-docker pull ghcr.io/home-assistant/home-assistant:stable
-sudo docker pull ghcr.io/home-assistant/home-assistant:stable
-sudo docker-compose up -d
+cd /opt/homeassistant
+sudo docker pull && sudo docker compose up -d
 ```
 
 ## ZFS pool
