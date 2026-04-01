@@ -40,12 +40,8 @@ All the powertop tunings are in place using TLP.
 
 ## Updating home assistant container
 ```bash
-sudo docker ps
-sudo docker stop homeassistant
-sudo docker rm homeassistant
-docker pull ghcr.io/home-assistant/home-assistant:stable
-sudo docker pull ghcr.io/home-assistant/home-assistant:stable
-sudo docker-compose up -d
+cd /opt/homeassistant
+sudo docker pull && sudo docker compose up -d
 ```
 
 ## ZFS pool
@@ -56,8 +52,8 @@ sudo zpool create -o ashift=12 pool raidz2 /dev/disk/by-id/ata-ST14000NM000J-2TX
 Used the following global settings on my ZFS pool for optimizing it to be used as SMB (Samba) shares as well as providing fast compression.
 ```bash
 sudo zfs set compression=lz4 pool
-sudo zfs set xattr=sa pool
-sudo zfs set acltype=posixacl pool
+sudo zfs set xattr=on pool
+sudo zfs set acltype=posix pool
 sudo zfs set atime=off pool
 sudo zfs set mountpoint=/mnt/pool pool
 ```
@@ -89,6 +85,8 @@ The `recordsize=128K` can hopefully help with performance for small and medium l
 Create general `media` dataset.
 ```bash
 sudo zfs create pool/media
+sudo zfs set aclmode=passthrough pool/media
+sudo zfs set aclinherit=passthrough pool/media
 ```
 Media dataset hierarchy:
 1. Photos (optimizing for smaller files):
@@ -120,6 +118,8 @@ Media dataset hierarchy:
 Create general `backups` dataset.
 ```bash
 sudo zfs create pool/backups
+sudo zfs set aclmode=passthrough pool/backups
+sudo zfs set aclinherit=passthrough pool/backups
 ```
 Backups dataset hierarchy:
 1. timemachine (For Apple users):
@@ -192,7 +192,7 @@ sudo passwd user2
 Now, for ownership, I have following scheme:
 ```bash
 sudo chown :nasusers /mnt/pool
-sudo chmod 750
+sudo chmod 750 /mnt/pool
 sudo chown -R :nasusers /mnt/pool/userdata
 sudo chown -R user1:nasusers /mnt/pool/userdata/user1
 sudo chown -R user2:nasusers /mnt/pool/userdata/user2
@@ -214,12 +214,13 @@ In general I will try to keep the same password
 Here's a few snippet configurations for the various datasets:
 
 ### Globals
-Samba global settings for taking advantage of ZFS options: `xattr=sa` and `acltype=posixacl`
+Samba global settings for taking advantage of ZFS options: `xattr=on` and `acltype=posix`
 ```
 [global]
 vfs objects = acl_xattr
 map acl inherit = yes
 store dos attributes = yes
+ea support = yes
 ```
 
 ### User Data
@@ -229,6 +230,7 @@ For each user like so:
 path = /mnt/pool/userdata/user1
 valid users = user1
 browseable = no
+read only = no
 writable = yes
 create mask = 0660
 directory mask = 0770
@@ -242,6 +244,7 @@ valid users = @nasusers
 browseable = yes
 writable = yes
 read only = no
+inherit acls = yes
 create mask = 0660
 directory mask = 0770
 vfs objects = catia fruit streams_xattr
@@ -255,11 +258,12 @@ valid users = @nasusers
 browseable = no
 writable = yes
 read only = no
+inherit acls = yes
 vfs objects = catia fruit streams_xattr
 fruit:aapl = yes
 fruit:time machine = yes
-create mask = 0600
-directory mask = 0700
+create mask = 0660
+directory mask = 0770
 ```
 
 ### Backups (others)
@@ -270,6 +274,7 @@ valid users = @nasusers
 browseable = no
 read only = no
 writable = yes
+inherit acls = yes
 create mask = 0660
 directory mask = 0770
 ```
