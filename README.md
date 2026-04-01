@@ -230,6 +230,7 @@ For each user like so:
 path = /mnt/pool/userdata/user1
 valid users = user1
 browseable = no
+read only = no
 writable = yes
 create mask = 0660
 directory mask = 0770
@@ -261,8 +262,8 @@ inherit acls = yes
 vfs objects = catia fruit streams_xattr
 fruit:aapl = yes
 fruit:time machine = yes
-create mask = 0600
-directory mask = 0700
+create mask = 0660
+directory mask = 0770
 ```
 
 ### Backups (others)
